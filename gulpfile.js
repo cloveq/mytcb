@@ -47,8 +47,8 @@ gulp.task('watch',function(){
 //js文件处理
 gulp.task('script',function(){
 	return gulp.src('tcb/**/*.js')
-			.pipe(rename({suffix:'min'}))
-			.pipe(uglify({preserveComments:'some'}))
+//			.pipe(rename({suffix:'min'}))
+//			.pipe(uglify({preserveComments:'some'}))
 			.pipe(gulp.dest('dist/'));
 })
 //默认

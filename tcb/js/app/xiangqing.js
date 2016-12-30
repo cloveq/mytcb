@@ -23,6 +23,28 @@ function createXHR(){
 var baseUrl = "http://localhost:4800";
 var inputs = document.querySelector("#input");
 var uls = document.querySelector(".uls");
+var tupian = document.querySelector(".tupian");
+var com = document.querySelector(".com");
+var nn = rand(1,11);
+function headData(){
+	var xhr = createXHR();
+	xhr.open('get',baseUrl+"/"+1);
+	xhr.send(null);
+	xhr.onreadystatechange = function(){
+		if(xhr.readyState == 4){
+			if(xhr.status == 200 || xhr.status == 304){
+				var data1 = JSON.parse(xhr.responseText)["shop_data"];
+				tupian.setAttribute("src",data1[nn]['shop_ico']);
+				com.innerHTML = data1[nn]['shop_name'];
+			}
+		}
+	}
+}
+headData();
+function rand(min,max){
+	return parseInt(Math.random()*(max-min)+min)
+}
+
 function dataGet(j){
 	var xhr = createXHR();
 	xhr.open('get',baseUrl+"/"+j);
@@ -57,7 +79,6 @@ function dataGet(j){
 					var button = document.createElement("button");
 					button.innerHTML = "立即购买";
 					odiv.appendChild(button);
-					
 					myli.appendChild(odiv);
 					document.querySelector(".liebiao").appendChild(myli);
 				}
@@ -65,57 +86,55 @@ function dataGet(j){
 		}
 	}
 }
-for (var j=4; j < 6;j++) {
-	dataGet(j);
-}
-var aa = document.querySelectorAll(".aa");
-var good = document.querySelector(".user_good");
-var edv = document.querySelector(".user_evu");
-var shop = document.querySelector(".user_shop");
-var ser = document.querySelector(".user_service");
-aa[0].onclick = function(){
-	good.style.display = "block";
-	edv.style.display = "block";
-	shop.style.display = "block";
-	ser.style.display = "block";
-}
-aa[1].onclick = function(){
-	good.style.display = "none";
-	edv.style.display = "block";
-	shop.style.display = "block";
-	ser.style.display = "block";
-}
-aa[2].onclick = function(){
-	good.style.display = "none";
-	edv.style.display = "none";
-	shop.style.display = "block";
-	ser.style.display = "block";
-}
-aa[3].onclick = function(){
-	good.style.display = "none";
-	edv.style.display = "none";
-	shop.style.display = "none";
-	ser.style.display = "block";
-}
-window.suggest=function(dat){
-	var daa = dat["result"]
-	uls.style.display = "block";
-	for (var k = 0;k < daa.length;k++) {
-		var li = document.createElement("li");
-		li.innerHTML = daa[k]['word'];
-		console.log(daa[k]['word']);
-		uls.appendChild(li);
+	for (var j=4; j < 6;j++) {
+		dataGet(j);
 	}
-	
-}
-input.oninput = function(){
-	var dom = document.createElement("script");
-	dom.setAttribute("src","http://suggest.bang.360.cn/suggest?word="+inputs.value+"&encodein=utf-8&encodeout=utf-8&format=json&callback=window.suggest&t=0.3514809920297852");
-			
-			document.body.appendChild(dom);
-}
-input.onblur = function(){
-	uls.style.display = "none";
-}
+	var aa = document.querySelectorAll(".aa");
+	var good = document.querySelector(".user_good");
+	var edv = document.querySelector(".user_evu");
+	var shop = document.querySelector(".user_shop");
+	var ser = document.querySelector(".user_service");
+	aa[0].onclick = function(){
+		good.style.display = "block";
+		edv.style.display = "block";
+		shop.style.display = "block";
+		ser.style.display = "block";
+	}
+	aa[1].onclick = function(){
+		good.style.display = "none";
+		edv.style.display = "block";
+		shop.style.display = "block";
+		ser.style.display = "block";
+	}
+	aa[2].onclick = function(){
+		good.style.display = "none";
+		edv.style.display = "none";
+		shop.style.display = "block";
+		ser.style.display = "block";
+	}
+	aa[3].onclick = function(){
+		good.style.display = "none";
+		edv.style.display = "none";
+		shop.style.display = "none";
+		ser.style.display = "block";
+	}
+	window.suggest=function(dat){
+		var daa = dat["result"]
+		uls.style.display = "block";
+		for (var k = 0;k < daa.length;k++) {
+			var li = document.createElement("li");
+			li.innerHTML = daa[k]['word'];
+			console.log(daa[k]['word']);
+			uls.appendChild(li);
+		}
+	}
+	input.oninput = function(){
+		var dom = document.createElement("script");
+		dom.setAttribute("src","http://suggest.bang.360.cn/suggest?word="+inputs.value+"&encodein=utf-8&encodeout=utf-8&format=json&callback=window.suggest&t=0.3514809920297852");
+		document.body.appendChild(dom);
+	}
+	input.onblur = function(){
+		uls.style.display = "none";
+	}
 }
 

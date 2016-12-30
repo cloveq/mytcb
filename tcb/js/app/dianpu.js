@@ -11,7 +11,6 @@ function createXHR(){
 						new ActiveXObject(versions[i]);
 						arguments.callee.activeXString = versions[i]
 					}catch(e){
-
 					}
 				}
 			}
@@ -27,6 +26,8 @@ var map11 = document.querySelector("#map11");
 var close = document.querySelector(".close");
 var fenye = document.querySelector(".fenye");
 var fena = fenye.querySelectorAll("a");
+var pag = document.querySelector(".pag");
+var pagli = pag.querySelector("li");
 function dataGet(x){
 	var xhr = createXHR();
 	xhr.open('get',baseUrl+"/"+(x+1));
@@ -75,67 +76,68 @@ function dataGet(x){
 					div.appendChild(a);
 					myli.appendChild(div);
 					document.querySelector(".left_s").appendChild(myli);
+					//创建地图
 					(function(i){
 						map_patt.onclick = function(){
-						document.querySelector(".bdiv").style.display = 'flex';
-						map = new AMap.Map('container',{
-						center:[data[i]['map_longitude'],data[i]['map_latitude']],
-						zoom:10
-					});
-					map.plugin(['AMap.ToolBar'],function(){
-						map.addControl(new AMap.ToolBar());
-					})
-					for (var k = 0;k < data.length;k++) {
-						var divImg = document.createElement("div");
-						divImg.className = "divs";
-						var imgg = document.createElement("img");
-						imgg.src="images/map.png";
-						imgg.className = "imgg";
-						divImg.appendChild(imgg);
-						var content = document.createElement("div");
-						content.className = "content";
-						var p1 = document.createElement("p");
-						p1.innerHTML = data[k]['shop_name'];
-						p1.className = "shopn";
-						var span1 = document.createElement("span");
-						span1.className = "close1";
-						span1.innerHTML = "×";
-						p1.appendChild(span1);
-						var p2 = document.createElement("p");
-						p2.innerHTML = '主营:' + data[k]['main'];	
-						p2.className = "mainz";
-						var p3 = document.createElement("p");
-						p3.innerHTML = "地址："+data[k]['addr'];
-						p3.className = "addr";
-						var a = document.querySelector("a");
-						a.innerHTML = "进入店铺";
-						a.className = "enter";
-						a.setAttribute("href","dianpu.html");
-						content.appendChild(p1);
-						content.appendChild(p2);
-						content.appendChild(p3);
-						content.appendChild(a);
-						divImg.appendChild(content);
-					marker = new AMap.Marker({
-						position:[data[k]['map_longitude'],data[k]['map_latitude']],
-						title:'',
-						content:divImg,
-						map:map
-					});
-					imgg.onclick = function(){
-						this.nextElementSibling.style.display = "block";
-					}
-					span1.onclick = function(){
-						this.parentNode.parentNode.style.display = 'none';
-					}
-					close.onclick = function(){
-						document.querySelector(".bdiv").style.display = 'none';
-					}
-					}
-				}
+							document.querySelector(".bdiv").style.display = 'flex';
+							map = new AMap.Map('container',{
+							center:[data[i]['map_longitude'],data[i]['map_latitude']],
+							zoom:10
+						});
+						map.plugin(['AMap.ToolBar'],function(){
+							map.addControl(new AMap.ToolBar());
+						})
+						for (var k = 0;k < data.length;k++) {
+							var divImg = document.createElement("div");
+							divImg.className = "divs";
+							var imgg = document.createElement("img");
+							imgg.src="images/map.png";
+							imgg.className = "imgg";
+							divImg.appendChild(imgg);
+							var content = document.createElement("div");
+							content.className = "content";
+							var p1 = document.createElement("p");
+							p1.innerHTML = data[k]['shop_name'];
+							p1.className = "shopn";
+							var span1 = document.createElement("span");
+							span1.className = "close1";
+							span1.innerHTML = "×";
+							p1.appendChild(span1);
+							var p2 = document.createElement("p");
+							p2.innerHTML = '主营:' + data[k]['main'];	
+							p2.className = "mainz";
+							var p3 = document.createElement("p");
+							p3.innerHTML = "地址："+data[k]['addr'];
+							p3.className = "addr";
+							var a = document.querySelector("a");
+							a.innerHTML = "进入店铺";
+							a.className = "enter";
+							a.setAttribute("href","dianpu.html");
+							content.appendChild(p1);
+							content.appendChild(p2);
+							content.appendChild(p3);
+							content.appendChild(a);
+							divImg.appendChild(content);
+							marker = new AMap.Marker({
+								position:[data[k]['map_longitude'],data[k]['map_latitude']],
+								title:'',
+								content:divImg,
+								topWhenClick:true,
+								map:map
+							});
+							imgg.onclick = function(){
+								this.nextElementSibling.style.display = "block";
+							}
+							span1.onclick = function(){
+								this.parentNode.parentNode.style.display = 'none';
+							}
+							close.onclick = function(){
+								document.querySelector(".bdiv").style.display = 'none';
+							}
+						}
+						}
 					})(i);
-					
-			}
+				}
 			}
 		}
 	}

@@ -10,7 +10,6 @@ app.use(express.static('../dist'));
 app.get('/:n',function(req,res){
 		req.header('Content-Type','application/x-www-form-urlencoded');
 		var n = req.params.n;
-		console.log(n);
 		fs.readFile('data/'+n+'.json',(err,data) =>{
 			if(err){
 				console.log("err");
